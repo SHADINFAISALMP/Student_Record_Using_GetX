@@ -15,7 +15,6 @@ class EditStudent extends StatelessWidget {
 
   final editcontroller = Get.find<Editcontroller>();
 
- 
   //  form key for the validation
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class EditStudent extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-             editcontroller.editstudentclicked(
+              editcontroller.editstudentclicked(
                 context,
                 student,
               );
@@ -45,7 +44,7 @@ class EditStudent extends StatelessWidget {
         child: Padding(
             padding: const EdgeInsets.all(20),
             child: Form(
-              key:editcontroller.formKey, // Assign the form key
+              key: editcontroller.formKey, // Assign the form key
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -53,13 +52,25 @@ class EditStudent extends StatelessWidget {
                   Stack(
                     children: [
                       InkWell(
-                        onTap: () =>editcontroller.editphoto(context),
+                        onTap: () => editcontroller.editphoto(context),
                         child: Obx(
                           () => CircleAvatar(
                             backgroundImage: FileImage(
                                 File(editcontroller.updatedImagepath.value)),
                             radius: 80,
                           ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 20,
+                        right: 5,
+                        child: IconButton(
+                          onPressed: () {
+                            editcontroller.editphoto(context);
+                          },
+                          icon: const Icon(Icons.add_a_photo_outlined),
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          iconSize: 40,
                         ),
                       ),
                     ],
@@ -185,6 +196,4 @@ class EditStudent extends StatelessWidget {
       ),
     );
   }
-
-  
 }

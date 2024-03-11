@@ -8,18 +8,18 @@ import 'package:sqflite_10/database/db_model.dart';
 late Database _db;
 Future<void> initializeDatabase() async {
   _db = await openDatabase(
-    'student_db',
+    'stu_db',
     version: 1,
     onCreate: (Database db, version) async {
       await db.execute(
-          'CREATE TABLE student (id INTEGER PRIMARY KEY, name TEXT, classname TEXT, father TEXT, pnumber TEXT, imagex TEXT)');
+          'CREATE TABLE stu (id INTEGER PRIMARY KEY, name TEXT, classname TEXT, father TEXT, pnumber TEXT, imagex TEXT)');
     },
   );
   print("Database created successfully.");
 }
 
 Future<List<StudentModel>> getstudentdata() async {
-  final result = await _db.rawQuery("SELECT * FROM student");
+  final result = await _db.rawQuery("SELECT * FROM stu");
   print('All Students data : ${result}');
 
   List<StudentModel> l1 = [];
@@ -33,7 +33,7 @@ Future<List<StudentModel>> getstudentdata() async {
 Future<void> addstudent(StudentModel value) async {
   try {
     await _db.rawInsert(
-      'INSERT INTO student(name,classname,father,pnumber,imagex) VALUES(?,?,?,?,?)',
+      'INSERT INTO stu(name,classname,father,pnumber,imagex) VALUES(?,?,?,?,?)',
       [value.name, value.classname, value.father, value.pnumber, value.imagex],
     );
     getstudentdata();
@@ -44,7 +44,7 @@ Future<void> addstudent(StudentModel value) async {
 }
 
 Future<void> deleteStudent(id) async {
-  await _db.delete('student', where: 'id=?', whereArgs: [id]);
+  await _db.delete('stu', where: 'id=?', whereArgs: [id]);
   getstudentdata();
   await Get.find<StudentController>().initialize();
 }
@@ -57,7 +57,7 @@ Future<void> editStudent(id, name, classname, father, pnumber, imagex) async {
     'pnumber': pnumber,
     'imagex': imagex,
   };
-  await _db.update('student', dataflow, where: 'id=?', whereArgs: [id]);
+  await _db.update('stu', dataflow, where: 'id=?', whereArgs: [id]);
   getstudentdata();
   await Get.find<StudentController>().initialize();
 }
